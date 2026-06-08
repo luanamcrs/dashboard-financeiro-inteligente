@@ -54,3 +54,18 @@ def get_category_summary(df: pd.DataFrame):
         .reset_index()
         .sort_values("valor", ascending=False)
     )
+
+def get_daily_expenses(df: pd.DataFrame):
+    return (
+        df.groupby("data")["valor"]
+        .sum()
+        .reset_index()
+        .sort_values("data")
+    )
+
+def get_transaction_count(df: pd.DataFrame):
+    return len(df)
+
+
+def get_average_expense(df: pd.DataFrame):
+    return df["valor"].mean()

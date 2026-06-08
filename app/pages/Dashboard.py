@@ -12,10 +12,13 @@ from services.analytics import (
     get_total_spent,
     get_top_category,
     get_category_summary,
-    get_top_expenses
+    get_top_expenses,
+    get_daily_expenses,
+    get_transaction_count,
+    get_average_expense
 )
 
-st.title("📊 Dashboard Financeiro")
+st.title("Dashboard Financeiro")
 
 df = get_transactions()
 
@@ -60,7 +63,10 @@ if df.empty:
 total_gasto = get_total_spent(df)
 categoria, valor_categoria = get_top_category(df)
 
-col1, col2 = st.columns(2)
+total_transacoes = get_transaction_count(df)
+ticket_medio = get_average_expense(df)
+
+col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.metric(
@@ -74,6 +80,17 @@ with col2:
         categoria
     )
 
+with col3:
+    st.metric(
+        "📄 Transações",
+        total_transacoes
+    )
+
+with col4:
+    st.metric(
+        "💰 Ticket Médio",
+        f"R$ {ticket_medio:,.2f}"
+    )
 st.divider()
 
 category_df = get_category_summary(df)
@@ -111,5 +128,25 @@ st.subheader("🏆 Top 5 Despesas")
 
 st.dataframe(
     get_top_expenses(df),
+    use_container_width=True
+)
+
+# Evolução dos Gastos
+st.divider()
+
+st.subheader("📈 Evolução dos Gastos ao Longo do Tempo")
+
+daily_df = get_daily_expenses(df)
+
+fig_line = px.line(
+    daily_df,
+    x="data",
+    y="valor",
+    markers=True,
+    title="Evolução dos Gastos"
+)
+
+st.plotly_chart(
+    fig_line,
     use_container_width=True
 )

@@ -13,7 +13,7 @@ from services.analytics import (
     get_top_expenses
 )
 
-st.title("💡 Insights Financeiros")
+st.title("Insights Financeiros")
 
 df = get_transactions()
 
