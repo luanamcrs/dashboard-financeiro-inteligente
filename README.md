@@ -132,6 +132,16 @@ data,descricao,categoria,valor
 
 ---
 
+## 📁 Dataset de Exemplo
+
+O projeto inclui um arquivo CSV de exemplo localizado em:
+
+```text
+data/raw/gastos.csv
+```
+
+Esse arquivo pode ser utilizado para testar rapidamente o pipeline ETL e as funcionalidades do dashboard.
+
 ## ⚙️ Configuração do Ambiente
 
 ### 1. Clonar o Repositório
